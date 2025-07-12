@@ -7,7 +7,7 @@ const Page = () => {
       Page
       <br/>
       <Button>
-        Hello CLock me please!
+          Let's get started!
       </Button>
     </div>
   )
