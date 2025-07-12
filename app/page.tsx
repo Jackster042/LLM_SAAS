@@ -7,7 +7,7 @@ const Page = () => {
       Page
       <br/>
       <Button>
-          Let's get started!
+          Let&#39;s get started!
       </Button>
     </div>
   )
