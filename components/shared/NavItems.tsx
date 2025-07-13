@@ -1,4 +1,4 @@
-"use clietnt";
+"use client";
 
 import React from 'react'
 import Link from "next/link";
@@ -8,7 +8,7 @@ import {usePathname} from "next/navigation";
 const navItems = [
     {label: "Home", href: "/"},
     {label: "Companions", href: "/companions"},
-    {label: "My Journey", href: "/my-journey"},
+    {label: "My Journey", href: "/profile"},
 ]
 
 const NavItems = () => {

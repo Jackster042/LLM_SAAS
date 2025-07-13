@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import Link from "next/link";
 import Image from "next/image";
 import NavItems from "@/components/shared/NavItems";
 
-const Navbar = () => {
+export const Navbar = () => {
     return (
+        <Fragment>
         <nav className="navbar">
             <Link href="/">
                 <div className="flex items-center gap-2.5 cursor-pointer">
@@ -16,14 +17,12 @@ const Navbar = () => {
                     />
                 </div>
             </Link>
-            {/*<div className="flex items-center gap-8">*/}
-            {/*    <p>Home</p>*/}
-            {/*    <p>Companions</p>*/}
-            {/*    <p>My Journey</p>*/}
-            {/*    <p>Sign In</p>*/}
-            {/*</div>*/}
+            <div className={"flex items-center gap-8"}>
             <NavItems />
+            </div>
         </nav>
+        </Fragment>
     )
 }
-export default Navbar
+
+
