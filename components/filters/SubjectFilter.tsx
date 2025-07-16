@@ -31,13 +31,17 @@ const SubjectFilter = () => {
             })
 
         }
-        router.push(newUrl, {scroll: false});
+            router.push(newUrl, {scroll: false});
     },[subject , router, searchParams])
 
     return (
+
             <Select onValueChange={setSubject} value={subject}>
-                <SelectTrigger className="input capitalize">
-                    <SelectValue placeholder="Search..."/>
+                <SelectTrigger className="input capitalize px-3 h-10 w-40">
+                    <div className="truncate w-full">
+
+                    <SelectValue placeholder="Search..." className="text-sm"/>
+                    </div>
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="all">All Subjects</SelectItem>
