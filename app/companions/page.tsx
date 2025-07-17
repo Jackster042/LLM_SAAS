@@ -15,7 +15,7 @@ const CompanionsLibrary = async ({ searchParams} : SearchParams) => {
         topic
     })
 
-    console.log("Companions:", companions)
+    // console.log("Companions:", companions)
 
     return (
         <main>
