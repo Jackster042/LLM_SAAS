@@ -36,12 +36,10 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
     useEffect(() => {
         const onCallStart = () => {
             setCallStatus(CallStatus.ACTIVE)
-            // console.log(callStatus, 'Call status updated to ACTIVE');
         };
 
         const onCallEnd = () => {
             setCallStatus(CallStatus.FINISHED);
-            // console.log(callStatus, 'Call status updated to FINISHED');
             addToSessionHistory(companionId)
         }
 
