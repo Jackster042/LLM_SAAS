@@ -231,5 +231,16 @@ export const removeBookmark = async (companionId: string, path: string) => {
     }
 };
 
-export const getBookmarkedCompanions = async () => {}
+export const getBookmarkedCompanions = async (userId: string) => {
+    const supabase = createSupabaseClient();
+
+    const { data, error } = await supabase
+        .from("bookmarks")
+        .select("companions:companion_id (*)")
+        .eq("user_id", userId);
+
+    if(error) throw new Error(error?.message || "Failed to get recent companions");
+
+    return data.map(({ companions}) => companions);
+}
 
