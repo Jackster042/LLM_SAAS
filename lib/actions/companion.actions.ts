@@ -2,6 +2,7 @@
 
 import {auth} from "@clerk/nextjs/server";
 import {createSupabaseClient} from "@/lib/supabase";
+import {revalidatePath} from "next/cache";
 
 export const createCompanion = async (formData: CreateCompanion) => {
     const { userId: author} = await auth()
@@ -16,8 +17,8 @@ export const createCompanion = async (formData: CreateCompanion) => {
 }
 
 export const getAllCompanions = async ({limit=10,page=1,subject,topic}: GetAllCompanions) => {
+    const { userId } = await auth();
     const supabase = createSupabaseClient();
-
     let query = supabase.from("companions").select()
 
     if(subject && topic) {
@@ -34,6 +35,22 @@ export const getAllCompanions = async ({limit=10,page=1,subject,topic}: GetAllCo
     const { data: companions, error } = await query;
 
     if(error) throw new Error(error?.message || "Failed to get companions")
+
+    const companionIds = companions.map(({id}) => id)
+
+    // Get the bookmarks where user_id is the current user and companion_id is in the array of companion IDs
+    const { data: bookmarks } = await supabase
+        .from("bookmarks")
+        .select()
+        .eq("user_id", userId)
+        .in("companion_id", companionIds); // Notice the in() function used to filter the bookmarks by array
+
+    const marks = new Set(bookmarks?.map(({ companion_id }) => companion_id));
+
+    // Add a bookmarked property to each companion
+    companions?.forEach((companion) => {
+        companion.bookmarked = marks.has(companion.id);
+    });
 
     return companions;
 
@@ -147,6 +164,72 @@ export const newCompanionPermissions = async () => {
     const companionCount = data?.length
 
     return companionCount < limit;
-
 }
+
+
+export const addBookmark = async (companionId: string, path: string) => {
+    try {
+        const { userId } = await auth();
+        if (!userId) throw new Error("User not authenticated");
+
+        const supabase = createSupabaseClient();
+
+        // First check if bookmark already exists
+        const { data: existing } = await supabase
+            .from("bookmarks")
+            .select()
+            .eq("companion_id", companionId)
+            .eq("user_id", userId)
+            .single();
+
+        if (existing) {
+            return { success: true, message: "Already bookmarked" };
+        }
+
+        const { data, error } = await supabase
+            .from("bookmarks")
+            .insert({
+                companion_id: companionId,
+                user_id: userId,
+            })
+            .select()
+            .single();
+
+        if (error) {
+            throw new Error(error.message || "Failed to add bookmark");
+        }
+
+        revalidatePath(path);
+        return { success: true, data };
+    } catch (error) {
+        console.error("Error adding bookmark:", error);
+        throw error;
+    }
+};
+
+export const removeBookmark = async (companionId: string, path: string) => {
+    try {
+        const { userId } = await auth();
+        if (!userId) throw new Error("User not authenticated");
+
+        const supabase = createSupabaseClient();
+        const { error } = await supabase
+            .from("bookmarks")
+            .delete()
+            .eq("companion_id", companionId)
+            .eq("user_id", userId);
+
+        if (error) {
+            throw new Error(error.message || "Failed to remove bookmark");
+        }
+
+        revalidatePath(path);
+        return { success: true };
+    } catch (error) {
+        console.error("Error removing bookmark:", error);
+        throw error;
+    }
+};
+
+export const getBookmarkedCompanions = async () => {}
 
