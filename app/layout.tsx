@@ -4,6 +4,8 @@ import "./globals.css";
 import {Navbar} from "@/components/shared/Navbar";
 
 import { ClerkProvider} from "@clerk/nextjs";
+import Footer from "@/components/shared/Footer";
+import React from "react";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -22,12 +24,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ClerkProvider appearance={{ variables: { colorPrimary: "#fe5933" } }}>
-      <body className={`${bricolage.variable} antialiased`}>
-       <Navbar />
-      {children}
-      </body>
-      </ClerkProvider>
+    <ClerkProvider appearance={{ variables: { colorPrimary: "#fe5933" } }}>
+        <body className={`${bricolage.variable} antialiased`}>
+        <Navbar />
+            {children}
+        <Footer />
+        </body>
+    </ClerkProvider>
     </html>
 
   );

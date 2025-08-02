@@ -142,6 +142,9 @@ body {
   .home-section {
     @apply flex gap-4 justify-between items-start w-full max-lg:flex-col-reverse max-lg:items-center;
   }
+  .footer-tos {
+    @apply underline text-sm text-muted-foreground cursor-pointer hidden sm:inline
+  }
   .companions-grid {
     @apply flex flex-wrap gap-4 w-full max-md:justify-center;
   }

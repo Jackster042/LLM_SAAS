@@ -71,3 +71,30 @@ export const recentSessions = [
     color: "#C8FFDF",
   },
 ];
+
+export const socials = [
+  {
+    id: "0",
+    title: "x",
+    icon: "/icons/x.svg",
+    url: "#",
+  },
+  {
+    id: "1",
+    title: "Threads",
+    icon: "/icons/threads.svg",
+    url: "#",
+  },
+  {
+    id: "2",
+    title: "Instagram",
+    icon: "/icons/instagram.svg",
+    url: "#",
+  },
+  {
+    id: "3",
+    title: "Discord",
+    icon: "/icons/discord.svg",
+    url: "#",
+  },
+];

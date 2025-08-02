@@ -84,6 +84,7 @@ const CompanionList = ({title, companions, classNames}: CompanionsListProps)=> {
            </TableBody>
        </Table>
    </article>
+
     )
 }
 export default CompanionList

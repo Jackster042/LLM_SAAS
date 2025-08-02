@@ -32,7 +32,6 @@ const Page = async () => {
             />
             <Cta />
         </section>
-
     </main>
   )
 }

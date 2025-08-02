@@ -12,6 +12,7 @@ import {redirect} from "next/navigation";
 import {getUserCompanions, getUserSessions, getBookmarkedCompanions} from "@/lib/actions/companion.actions";
 import Image from "next/image";
 import CompanionList from "@/components/companion/CompanionList";
+import Footer from "@/components/shared/Footer";
 
 const ProfilePage = async () => {
 
@@ -23,7 +24,7 @@ const ProfilePage = async () => {
     const bookmarkedCompanions = await getBookmarkedCompanions(user.id);
 
     return (
-        <main className="min-lg:w-3/4">
+        <main className="min-lg:w-3/4 min-h-[calc(100vh-200px)]">
           <section className="flex items-center justify-between gap-4 max-sm:flex-col">
               {/*left side*/}
               <div className="flex items-center gap-4">
